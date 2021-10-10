@@ -1,0 +1,6 @@
+venv
+tjanseauktion/__pycache__
+util
+*.pdf
+logs
+.idea

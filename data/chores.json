@@ -1,0 +1,247 @@
+[
+    {
+        "desc": "Mad prep",
+        "day": "Fredag",
+        "time": "20:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter aftensmad",
+        "day": "Fredag",
+        "time": "20:00"
+    },
+    {
+        "desc": "Udendørsvagt",
+        "day": "Fredag",
+        "time": "Hele dagen"
+    },
+    {
+        "desc": "Oprydning efter Bodycrashing",
+        "day": "Fredag",
+        "time": "Efter Bodycrashing"
+    },
+    {
+        "desc": "Oprydning efter fest",
+        "day": "Lørdag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Oprydning efter fest",
+        "day": "Lørdag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Klargøre morgenmad",
+        "day": "Lørdag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter morgenmad",
+        "day": "Lørdag",
+        "time": "Efter morgenmad"
+    },
+    {
+        "desc": "Klargøre frokost",
+        "day": "Lørdag",
+        "time": "11.00"
+    },
+    {
+        "desc": "Klargøre frokost",
+        "day": "Lørdag",
+        "time": "11:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter frokost",
+        "day": "Lørdag",
+        "time": "Efter frokost"
+    },
+    {
+        "desc": "Klargøre til kaffe og rydde op",
+        "day": "Lørdag",
+        "time": "14:00"
+    },
+    {
+        "desc": "Klargøre aftensmad",
+        "day": "Lørdag",
+        "time": "17:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter aftensmad",
+        "day": "Lørdag",
+        "time": "Efter aftensmad"
+    },
+    {
+        "desc": "Klargøring til FLUDO",
+        "day": "Lørdag",
+        "time": "19:30"
+    },
+    {
+        "desc": "Udendørsvagt",
+        "day": "Lørdag",
+        "time": "Hele dagen"
+    },
+    {
+        "desc": "Oprydning efter FLUDO",
+        "day": "Lørdag",
+        "time": "Efter FLUDO"
+    },
+    {
+        "desc": "Opstil stole til oplæg",
+        "day": "Lørdag",
+        "time": "10:00 og 13:00"
+    },
+    {
+        "desc": "Toiletvagt",
+        "day": "Lørdag",
+        "time": "Hele dagen"
+    },
+    {
+        "desc": "Oprydning efter fest",
+        "day": "Søndag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Oprydning efter fest",
+        "day": "Søndag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Klargøre morgenmad",
+        "day": "Søndag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter morgenmad",
+        "day": "Søndag",
+        "time": "Efter morgenmad"
+    },
+    {
+        "desc": "Klargøre frokost",
+        "day": "Søndag",
+        "time": "11:00"
+    },
+    {
+        "desc": "Prep til aftensmad",
+        "day": "Søndag",
+        "time": "11:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter frokost",
+        "day": "Søndag",
+        "time": "Efter frokost"
+    },
+    {
+        "desc": "Kagetjans",
+        "day": "Søndag",
+        "time": "14:00"
+    },
+    {
+        "desc": "Kagetjans",
+        "day": "Søndag",
+        "time": "14:00"
+    },
+    {
+        "desc": "Pynte op til galemiddag",
+        "day": "Søndag",
+        "time": "17:00"
+    },
+    {
+        "desc": "Klargøring og hjælp i køkkenet til galemiddag",
+        "day": "Søndag",
+        "time": "16:00"
+    },
+    {
+        "desc": "Klargøring og hjælp i køkkenet til galemiddag",
+        "day": "Søndag",
+        "time": "16:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter forretten",
+        "day": "Søndag",
+        "time": "Efter forretten"
+    },
+    {
+        "desc": "Galemiddag dessert",
+        "day": "Søndag",
+        "time": "21 ish?"
+    },
+    {
+        "desc": "Afrydning og opvask efter hovedretten",
+        "day": "Søndag",
+        "time": "Efter hovedretten"
+    },
+    {
+        "desc": "Afrydning og opvask efter desserten",
+        "day": "Søndag",
+        "time": "Efter desserten"
+    },
+    {
+        "desc": "Udendørsvagt",
+        "day": "Søndag",
+        "time": "Hele dagen"
+    },
+    {
+        "desc": "Opstille stole til oplæg",
+        "day": "Søndag",
+        "time": "10:00 og 13:00"
+    },
+    {
+        "desc": "Toiletvagt",
+        "day": "Søndag",
+        "time": "Hele dagen"
+    },
+    {
+        "desc": "Oprydning efter fest",
+        "day": "Mandag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Oprydning efter fest",
+        "day": "Mandag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Klargøre morgenmad",
+        "day": "Mandag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter morgenmad",
+        "day": "Mandag",
+        "time": "9:00"
+    },
+    {
+        "desc": "Rengøring af badeværelser i sovehytterne",
+        "day": "Mandag",
+        "time": "9:00"
+    },
+    {
+        "desc": "Fejning og vask af gulv i sovehytterne",
+        "day": "Mandag",
+        "time": "9:00"
+    },
+    {
+        "desc": "Rengøring af pejsestuen",
+        "day": "Mandag",
+        "time": "9:00"
+    },
+    {
+        "desc": "Oprydning udendørs",
+        "day": "Mandag",
+        "time": "9:00"
+    },
+    {
+        "desc": "Rengøring af spisesal",
+        "day": "Mandag",
+        "time": "9:00"
+    },
+    {
+        "desc": "Rengøring af køkken",
+        "day": "Mandag",
+        "time": "9:00"
+    },
+    {
+        "desc": "Prep restauktion + madpakker",
+        "day": "Mandag",
+        "time": "10:00"
+    }
+]
