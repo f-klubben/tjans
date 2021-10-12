@@ -55,15 +55,15 @@ class Auction:
         :return: Message object containing resulting success/error message
         """
         if not self.is_bid_valid(bid):
-            return Message(f'Error: bid is too low ({bid} / {self.current_bid})',
+            return Message(f'Error: bid is too low ({bid} / {self.current_bid}) ({bid_str})',
                            attr=curses.color_pair(constants.COLOUR_ERR_MSG))
 
         if not self.is_bidder_valid(bidder):
-            return Message(f'Error: bidder already has the lead',
+            return Message(f'Error: bidder already has the lead (team{bidder.id})',
                            attr=curses.color_pair(constants.COLOUR_ERR_MSG))
 
         if not bidder.can_afford(bid):
-            return Message(f"Error: bidder can't afford {bidder.coins}/{bid}",
+            return Message(f"Error: bidder can't afford ({bidder.coins} / {bid}) ({bid_str})",
                            attr=curses.color_pair(constants.COLOUR_ERR_MSG))
 
         self.current_bid = bid
