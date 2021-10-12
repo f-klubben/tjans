@@ -233,5 +233,10 @@
         "desc": "Prep restauktion + madpakker",
         "day": "Mandag",
         "time": "10:00"
+    },
+    {
+        "desc": "Fritjans",
+        "day": "Mandag",
+        "time": ""
     }
 ]
