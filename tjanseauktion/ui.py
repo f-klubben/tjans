@@ -409,7 +409,8 @@ class UI:
         cur_row = self.left_margin_text('Statistics', cur_row, curses.A_UNDERLINE)
         cur_row = self.left_margin_text(self.HR, cur_row)
 
-        auctions_left = len(self.auctions)
+        # +1 because we delete after current auction is selected
+        auctions_left = len(self.auctions) + 1
         auctions_done = len(self.completed_auctions)
         secrets_left = sum(1 for x in self.auctions if x.is_secret)
         free_chores_left = sum(1 for x in self.auctions if x.chore.desc == 'Fritjans')
