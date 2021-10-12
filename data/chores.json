@@ -90,11 +90,6 @@
         "time": "10:00 og 13:00"
     },
     {
-        "desc": "Toiletvagt",
-        "day": "Lørdag",
-        "time": "Hele dagen"
-    },
-    {
         "desc": "Oprydning efter fest",
         "day": "Søndag",
         "time": "8:00"
@@ -183,11 +178,6 @@
         "desc": "Opstille stole til oplæg",
         "day": "Søndag",
         "time": "10:00 og 13:00"
-    },
-    {
-        "desc": "Toiletvagt",
-        "day": "Søndag",
-        "time": "Hele dagen"
     },
     {
         "desc": "Oprydning efter fest",
