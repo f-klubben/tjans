@@ -2,6 +2,7 @@ from .team import Team
 
 import os
 from datetime import datetime
+from typing import List
 
 import markdown
 from weasyprint import HTML
@@ -13,7 +14,7 @@ TIMESTAMP = DATE.strftime('%d-%m-%Y')
 class PDFWriter:
 
     @classmethod
-    def write_to_pdf(cls, teams: list[Team]):
+    def write_to_pdf(cls, teams: List[Team]):
         file_name = f'tjanseauktion-{TIMESTAMP}'
         md = f'# Tjanseauktion {DATE.year}\n\n'
 

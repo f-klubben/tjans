@@ -3,8 +3,7 @@ from . import common
 from .chore import Chore
 
 import math
-import json
-import curses
+from typing import List
 
 
 class Team:
@@ -12,7 +11,7 @@ class Team:
 
     def __init__(self, _id: int):
         self.coins = constants.START_COINS
-        self.chores = []  # type: list[Chore]
+        self.chores = []  # type: List[Chore]
         self.id = _id
         self.has_free_win = True
 

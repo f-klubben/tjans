@@ -6,6 +6,7 @@ import os
 import json
 from datetime import datetime
 from pathlib import Path
+from typing import List
 
 LOG_DIR = 'logs'
 TIMESTAMP = datetime.now().strftime('%d-%m-%Y')
@@ -40,8 +41,8 @@ class StateLogger:
                     'cur_auction': None
                 }))
 
-    def log_state(self, teams: list[Team], auctions: list[Auction],
-                  completed_auctions: list[Auction], cur_auction: Auction):
+    def log_state(self, teams: List[Team], auctions: List[Auction],
+                  completed_auctions: List[Auction], cur_auction: Auction):
         log = {
             'teams': [x.to_json() for x in teams],
             'auctions': [x.to_json() for x in auctions],

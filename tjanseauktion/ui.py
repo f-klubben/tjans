@@ -13,7 +13,7 @@ from .pdf import PDFWriter
 import curses
 import math
 from curses.textpad import rectangle
-from typing import Optional
+from typing import Optional, List
 
 
 class UI:
@@ -54,7 +54,7 @@ class UI:
             self.teams = [Team(i) for i in range(self.cfg.auction_n_teams())]
             self.chores = Chore.load_chores()
             self.auctions = Auction.create_auctions(self.chores, self.cfg.auction_n_secrets(), len(self.teams))
-            self.completed_auctions = []  # type: list[Auction]
+            self.completed_auctions = []  # type: List[Auction]
             self.cur_auction = self.auctions[0]  # type: Auction
             del self.auctions[0]
 
@@ -71,7 +71,7 @@ class UI:
         # max amount of messages to keep in UI log
         self.log_textbox_row_limit = 10
         self.log_textbox_cols = 60
-        self.log_textbox_msgs = []  # type: list[Message]
+        self.log_textbox_msgs = []  # type: List[Message]
 
         # window row state; ui is generated procedurally
         self.cur_row = self.WINDOW_TOP_MARGIN
