@@ -6,7 +6,7 @@ A Python port of the original [Tjanseauktion](https://github.com/MikkelKettunen/
 
 ### Prerequisites
 
-- Python 3.9 (only tested with 3.9, but should work with 3.6+)
+- Python 3.6+
 
 ### Installation
 
