@@ -23,6 +23,11 @@ class Auction:
     def __str__(self) -> str:
         return f'[SECRET] - {self.chore.__str__()}' if self.is_secret else self.chore.__str__()
 
+    def __eq__(self, other):
+        if not other:
+            return False
+        return self.chore == self.chore
+
     def is_bid_valid(self, bid: int) -> bool:
         """
         Ensure bid is valid

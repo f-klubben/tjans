@@ -11,13 +11,16 @@ class Chore:
     def __str__(self) -> str:
         return f'{self.desc} - {self.day} at {self.time}'
 
+    def __eq__(self, other):
+        if not other:
+            return False
+        return self.desc == other.desc and self.day == other.day and self.time == other.time
+
     @classmethod
-    def load_chores(cls) -> list:
+    def load_chores(cls, path: str = 'data/chores.json') -> list:
         """
         Load all chores from ./data/chores.json and return them as a list of Chore objects
         """
-        path = 'data/chores.json'
-
         with open(path, 'r') as f:
             data = json.loads(f.read())
 
