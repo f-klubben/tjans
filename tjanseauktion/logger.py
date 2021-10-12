@@ -67,4 +67,5 @@ class StateLogger:
         with open(self.path, 'r') as f:
             data = json.loads(f.read())
 
-        return all(bool(data[key]) for key in ['teams', 'auctions', 'completed_auctions', 'cur_auction'])
+        # allow completed auctions to be empty
+        return all(bool(data[key]) for key in ['teams', 'auctions', 'cur_auction']) and 'completed_auctions' in data.keys()
