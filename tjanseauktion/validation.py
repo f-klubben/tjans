@@ -3,7 +3,7 @@ import re
 
 class InputValidation:
     BID_PATTERN = r'^\d+ \d*:\d*:\d*$'
-    BID_INSTANT_WIN_PATTERN = r'^\d+ win'
+    BID_INSTANT_WIN_PATTERN = r'^\d+ win$'
     CONVERT_PATTERN = r'^\d*:\d*:\d*$'
 
     @classmethod
