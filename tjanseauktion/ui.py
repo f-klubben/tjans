@@ -239,7 +239,7 @@ class UI:
                 self.msg = self.cur_auction.try_bid(bid, self.teams[team_id], normalized_msg)
 
         else:
-            self.msg = Message(f"Error: input not valid. Check command menu for syntax.",
+            self.msg = Message(f"Error: input not valid ({msg.strip()}). Check command menu for syntax.",
                                attr=curses.color_pair(constants.COLOUR_ERR_MSG))
         self.bid_edit_win.clear()
 
@@ -261,7 +261,7 @@ class UI:
             self.msg = Message(f"\"{normalized_msg}\" is {value} coins",
                                attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
         else:
-            self.msg = Message(f"Error: input not valid. Check command menu for syntax.",
+            self.msg = Message(f"Error: input not valid ({msg.strip()}). Check command menu for syntax.",
                                attr=curses.color_pair(constants.COLOUR_ERR_MSG))
         self.bid_edit_win.clear()
 
