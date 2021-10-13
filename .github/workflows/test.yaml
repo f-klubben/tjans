@@ -12,4 +12,6 @@ jobs:
         with:
           python-version: 3.9
       - name: Run tests
-        run: python -m unittest
+        run: |
+        export TERM=linux
+        python -m unittest
