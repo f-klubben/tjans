@@ -8,7 +8,7 @@ from .fextbox import Fextbox
 from .validation import InputValidation
 from .message import Message
 from .logger import MessageLogger, StateLogger
-from .pdf import PDFWriter
+from .output import OutputWriter
 
 import curses
 import math
@@ -312,7 +312,7 @@ class UI:
     def _prepare_next_auction(self):
         if not self.auctions:
             # no more auctions remain
-            PDFWriter.write_to_pdf(self.teams)
+            OutputWriter.write_to_pdf(self.teams)
             self.msg = Message('All chores have been sold. PDF saved to run dir.',
                                attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
             self.cur_auction = None

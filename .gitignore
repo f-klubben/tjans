@@ -4,5 +4,6 @@ tjanseauktion/__pycache__
 tests/__pycache__
 util
 *.pdf
+*.md
 logs
 .idea
