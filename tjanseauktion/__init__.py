@@ -1,5 +1,11 @@
 from .ui import UI
 
+import curses
+
 
 def run():
-    UI()
+    try:
+        UI()
+    except KeyboardInterrupt:
+        curses.endwin()
+        curses.reset_shell_mode()

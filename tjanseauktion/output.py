@@ -1,19 +1,16 @@
 from .team import Team
 
-import os
 from datetime import datetime
-
-import markdown
-from weasyprint import HTML
+from typing import List
 
 DATE = datetime.now()
 TIMESTAMP = DATE.strftime('%d-%m-%Y')
 
 
-class PDFWriter:
+class OutputWriter:
 
     @classmethod
-    def write_to_pdf(cls, teams: list[Team]):
+    def write_to_pdf(cls, teams: List[Team]):
         file_name = f'tjanseauktion-{TIMESTAMP}'
         md = f'# Tjanseauktion {DATE.year}\n\n'
 
@@ -25,11 +22,5 @@ class PDFWriter:
 
             md += '\n'
 
-        html = markdown.markdown(md)
-
-        with open(f'{file_name}.html', 'w') as f:
-            f.write(html)
-
-        HTML(f'{file_name}.html', encoding='utf-8').write_pdf(f'{file_name}.pdf')
-        os.remove(f'{file_name}.html')
-
+        with open(f'{file_name}.md', 'w') as f:
+            f.write(md)

@@ -55,15 +55,15 @@ class Auction:
         :return: Message object containing resulting success/error message
         """
         if not self.is_bid_valid(bid):
-            return Message(f'Error: bid is too low ({bid} / {self.current_bid})',
+            return Message(f'Error: bid is too low ({bid} / {self.current_bid}) ({bid_str})',
                            attr=curses.color_pair(constants.COLOUR_ERR_MSG))
 
         if not self.is_bidder_valid(bidder):
-            return Message(f'Error: bidder already has the lead',
+            return Message(f'Error: bidder already has the lead (team{bidder.id})',
                            attr=curses.color_pair(constants.COLOUR_ERR_MSG))
 
         if not bidder.can_afford(bid):
-            return Message(f"Error: bidder can't afford {bidder.coins}/{bid}",
+            return Message(f"Error: bidder can't afford ({bidder.coins} / {bid}) ({bid_str})",
                            attr=curses.color_pair(constants.COLOUR_ERR_MSG))
 
         self.current_bid = bid
@@ -117,7 +117,6 @@ class Auction:
 
             selection.is_secret = True
 
-        # TODO: figure out how to do this
         """
         the amount of free chores is the amount of chores remaining given x chores per team
         that is, with 12 teams and 45 chores, each team needs 4 chores and 3 chores will be free chores
@@ -126,15 +125,13 @@ class Auction:
         with the original tjanseauktion list, we had 48 chores - this would equal 0 free chores
         how did we ever have any free chores?
         """
-        # chores_per_team = math.ceil(len(chores) / n_teams)
-        # n_free_chores = (chores_per_team * n_teams) % len(chores)
-        # print(chores_per_team)
-        # print(n_free_chores)
+        chores_per_team = math.ceil(len(chores) / n_teams)
+        n_free_chores = (chores_per_team * n_teams) % len(chores)
 
-        # for i in range(n_free_chores):
-        #    a = Auction(Chore('Fritjans', '', ''))
-        #    a.is_secret = True
-        #    auctions.append(a)
+        for i in range(n_free_chores):
+            a = Auction(Chore('Fritjans', '', ''))
+            a.is_secret = True
+            auctions.append(a)
 
         # shuffle auctions and make sure we start with monday chores
         random.shuffle(auctions)

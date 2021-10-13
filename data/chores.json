@@ -90,11 +90,6 @@
         "time": "10:00 og 13:00"
     },
     {
-        "desc": "Toiletvagt",
-        "day": "Lørdag",
-        "time": "Hele dagen"
-    },
-    {
         "desc": "Oprydning efter fest",
         "day": "Søndag",
         "time": "8:00"
@@ -185,11 +180,6 @@
         "time": "10:00 og 13:00"
     },
     {
-        "desc": "Toiletvagt",
-        "day": "Søndag",
-        "time": "Hele dagen"
-    },
-    {
         "desc": "Oprydning efter fest",
         "day": "Mandag",
         "time": "8:00"
@@ -243,5 +233,10 @@
         "desc": "Prep restauktion + madpakker",
         "day": "Mandag",
         "time": "10:00"
+    },
+    {
+        "desc": "Fritjans",
+        "day": "Mandag",
+        "time": ""
     }
 ]

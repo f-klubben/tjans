@@ -8,12 +8,12 @@ from .fextbox import Fextbox
 from .validation import InputValidation
 from .message import Message
 from .logger import MessageLogger, StateLogger
-from .pdf import PDFWriter
+from .output import OutputWriter
 
 import curses
 import math
 from curses.textpad import rectangle
-from typing import Optional
+from typing import Optional, List
 
 
 class UI:
@@ -39,7 +39,8 @@ class UI:
         {'help': "<ESC> to cancel"},
         {'help': f"Syntax: {InputValidation.CONVERT_PATTERN}"},
         {'cmd': 's', 'help': "Sell chore to highest bidder"},
-        {'cmd': 'r', 'help': "Reset all bids"}
+        {'cmd': 'r', 'help': "Reset bids for current auction"},
+        {'cmd': 'p', 'help': "Revert last auction"}
     ]
 
     def __init__(self):
@@ -54,7 +55,7 @@ class UI:
             self.teams = [Team(i) for i in range(self.cfg.auction_n_teams())]
             self.chores = Chore.load_chores()
             self.auctions = Auction.create_auctions(self.chores, self.cfg.auction_n_secrets(), len(self.teams))
-            self.completed_auctions = []  # type: list[Auction]
+            self.completed_auctions = []  # type: List[Auction]
             self.cur_auction = self.auctions[0]  # type: Auction
             del self.auctions[0]
 
@@ -71,7 +72,7 @@ class UI:
         # max amount of messages to keep in UI log
         self.log_textbox_row_limit = 10
         self.log_textbox_cols = 60
-        self.log_textbox_msgs = []  # type: list[Message]
+        self.log_textbox_msgs = []  # type: List[Message]
 
         # window row state; ui is generated procedurally
         self.cur_row = self.WINDOW_TOP_MARGIN
@@ -190,6 +191,9 @@ class UI:
             elif action == ord('r'):
                 self._reset_auction_action()
 
+            elif action == ord('p'):
+                self._revert_last_auction_action()
+
             self.log_last_message()
             self.state_logger.log_state(self.teams, self.auctions, self.completed_auctions, self.cur_auction)
 
@@ -239,7 +243,7 @@ class UI:
                 self.msg = self.cur_auction.try_bid(bid, self.teams[team_id], normalized_msg)
 
         else:
-            self.msg = Message(f"Error: input not valid. Check command menu for syntax.",
+            self.msg = Message(f"Error: input not valid ({msg.strip()}). Check command menu for syntax.",
                                attr=curses.color_pair(constants.COLOUR_ERR_MSG))
         self.bid_edit_win.clear()
 
@@ -261,7 +265,7 @@ class UI:
             self.msg = Message(f"\"{normalized_msg}\" is {value} coins",
                                attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
         else:
-            self.msg = Message(f"Error: input not valid. Check command menu for syntax.",
+            self.msg = Message(f"Error: input not valid ({msg.strip()}). Check command menu for syntax.",
                                attr=curses.color_pair(constants.COLOUR_ERR_MSG))
         self.bid_edit_win.clear()
 
@@ -288,10 +292,27 @@ class UI:
         self.msg = Message('Reset current auction state',
                            attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
 
+    def _revert_last_auction_action(self):
+        if len(self.completed_auctions) > 0:
+            self.auctions.insert(0, self.cur_auction)
+            self.cur_auction = self.completed_auctions.pop()
+            # if bid is not present, instant win was used
+            if self.cur_auction.current_bid == -1:
+                self.cur_auction.bidder.has_free_win = True
+            else:
+                self.cur_auction.bidder.coins += self.cur_auction.current_bid
+            self.cur_auction.bidder.chores.pop()
+            self.cur_auction.reset_bids()
+            self.msg = Message('Reverted last auction',
+                               attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
+        else:
+            self.msg = Message('Error: no auctions have been completed',
+                               attr=curses.color_pair(constants.COLOUR_ERR_MSG))
+
     def _prepare_next_auction(self):
         if not self.auctions:
             # no more auctions remain
-            PDFWriter.write_to_pdf(self.teams)
+            OutputWriter.write_to_pdf(self.teams)
             self.msg = Message('All chores have been sold. PDF saved to run dir.',
                                attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
             self.cur_auction = None
@@ -409,7 +430,8 @@ class UI:
         cur_row = self.left_margin_text('Statistics', cur_row, curses.A_UNDERLINE)
         cur_row = self.left_margin_text(self.HR, cur_row)
 
-        auctions_left = len(self.auctions)
+        # +1 because we delete after current auction is selected
+        auctions_left = len(self.auctions) + 1
         auctions_done = len(self.completed_auctions)
         secrets_left = sum(1 for x in self.auctions if x.is_secret)
         free_chores_left = sum(1 for x in self.auctions if x.chore.desc == 'Fritjans')

@@ -20,10 +20,6 @@ class TestAuction(unittest.TestCase):
             Chore("some chore", "yesterday", "25:00")
         )
 
-    def tearDown(self) -> None:
-        curses.endwin()
-        curses.reset_shell_mode()
-
     def test_str(self):
         self.assertEqual(self.auction.__str__(), "some chore - yesterday at 25:00")
         self.auction.is_secret = True
@@ -46,22 +42,22 @@ class TestAuction(unittest.TestCase):
     def test_try_bid_too_low(self):
         bidder = Team(0)
         self.auction.current_bid = 2000
-        msg = self.auction.try_bid(500, bidder, '')
-        self.assertEqual(msg.txt, "Error: bid is too low (500 / 2000)")
+        msg = self.auction.try_bid(500, bidder, '0 1::7')
+        self.assertEqual(msg.txt, "Error: bid is too low (500 / 2000) (0 1::7)")
         self.assertEqual(msg.attr, curses.color_pair(constants.COLOUR_ERR_MSG))
 
     def test_try_bid_bidder_has_lead(self):
         bidder = Team(0)
         self.auction.bidder = bidder
         msg = self.auction.try_bid(500, bidder, '')
-        self.assertEqual(msg.txt, "Error: bidder already has the lead")
+        self.assertEqual(msg.txt, "Error: bidder already has the lead (team0)")
         self.assertEqual(msg.attr, curses.color_pair(constants.COLOUR_ERR_MSG))
 
     def test_try_bid_cant_afford(self):
         bidder = Team(0)
         bidder.coins = 200
-        msg = self.auction.try_bid(500, bidder, '')
-        self.assertEqual(msg.txt, "Error: bidder can't afford 200/500")
+        msg = self.auction.try_bid(500, bidder, '0 1::7')
+        self.assertEqual(msg.txt, "Error: bidder can't afford (200 / 500) (0 1::7)")
         self.assertEqual(msg.attr, curses.color_pair(constants.COLOUR_ERR_MSG))
 
     def test_try_bid_success(self):
@@ -101,8 +97,7 @@ class TestAuction(unittest.TestCase):
             Chore("abolish capitalist society", "asap", "*")
         ]
         n_secrets = 2
-        # TODO: test free chores once fixed
-        auctions = Auction.create_auctions(chores, n_secrets, 0)
+        auctions = Auction.create_auctions(chores, n_secrets, 1)
         self.assertEqual(len(auctions), len(chores))
         self.assertEqual(sum(1 for x in auctions if x.is_secret), n_secrets)
         # monday chore should be first
