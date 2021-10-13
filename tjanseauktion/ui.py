@@ -39,7 +39,8 @@ class UI:
         {'help': "<ESC> to cancel"},
         {'help': f"Syntax: {InputValidation.CONVERT_PATTERN}"},
         {'cmd': 's', 'help': "Sell chore to highest bidder"},
-        {'cmd': 'r', 'help': "Reset bids for current auction"}
+        {'cmd': 'r', 'help': "Reset bids for current auction"},
+        {'cmd': 'p', 'help': "Revert last auction"}
     ]
 
     def __init__(self):
@@ -190,6 +191,9 @@ class UI:
             elif action == ord('r'):
                 self._reset_auction_action()
 
+            elif action == ord('p'):
+                self._revert_last_auction_action()
+
             self.log_last_message()
             self.state_logger.log_state(self.teams, self.auctions, self.completed_auctions, self.cur_auction)
 
@@ -287,6 +291,23 @@ class UI:
         self.cur_auction.reset_bids()
         self.msg = Message('Reset current auction state',
                            attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
+
+    def _revert_last_auction_action(self):
+        if len(self.completed_auctions) > 0:
+            self.auctions.insert(0, self.cur_auction)
+            self.cur_auction = self.completed_auctions.pop()
+            # if bid is not present, instant win was used
+            if self.cur_auction.current_bid == -1:
+                self.cur_auction.bidder.has_free_win = True
+            else:
+                self.cur_auction.bidder.coins += self.cur_auction.current_bid
+            self.cur_auction.bidder.chores.pop()
+            self.cur_auction.reset_bids()
+            self.msg = Message('Reverted last auction',
+                               attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
+        else:
+            self.msg = Message('Error: no auctions have been completed',
+                               attr=curses.color_pair(constants.COLOUR_ERR_MSG))
 
     def _prepare_next_auction(self):
         if not self.auctions:
