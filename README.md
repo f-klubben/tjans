@@ -1,6 +1,6 @@
 # Tjanseauktion
 
-A Python port of the original [Tjanseauktion](https://github.com/MikkelKettunen/Tjanseauktion) used on fyttetur.
+A pure Python port of the original [Tjanseauktion](https://github.com/MikkelKettunen/Tjanseauktion) used on fyttetur.
 
 ## Setup
 
@@ -11,9 +11,7 @@ A Python port of the original [Tjanseauktion](https://github.com/MikkelKettunen/
 ### Installation
 
 ```
-$ python -m venv venv
-$ source venv/bin/activate
-$ ./setup.sh
+$ mkdir logs
 ```
 
 ## Usage
