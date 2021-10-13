@@ -20,10 +20,6 @@ class TestAuction(unittest.TestCase):
             Chore("some chore", "yesterday", "25:00")
         )
 
-    def tearDown(self) -> None:
-        curses.endwin()
-        curses.reset_shell_mode()
-
     def test_str(self):
         self.assertEqual(self.auction.__str__(), "some chore - yesterday at 25:00")
         self.auction.is_secret = True
