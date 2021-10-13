@@ -39,7 +39,7 @@ class UI:
         {'help': "<ESC> to cancel"},
         {'help': f"Syntax: {InputValidation.CONVERT_PATTERN}"},
         {'cmd': 's', 'help': "Sell chore to highest bidder"},
-        {'cmd': 'r', 'help': "Reset all bids"}
+        {'cmd': 'r', 'help': "Reset bids for current auction"}
     ]
 
     def __init__(self):
