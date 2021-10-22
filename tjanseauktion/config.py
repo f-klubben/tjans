@@ -34,6 +34,12 @@ class Config:
         """
         return int(self.cfg.get('auction', 'n_secrets'))
 
+    def auction_min_overbid_factor(self) -> float:
+        """
+        Retrieve minimum overbid factor
+        """
+        return int(self.cfg.get('auction', 'min_overbid_percent')) / 100
+
     def currency_high_name(self) -> str:
         """
         Retrieve high currency name
