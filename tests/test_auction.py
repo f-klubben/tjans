@@ -20,6 +20,19 @@ class TestAuction(unittest.TestCase):
             Chore("some chore", "yesterday", "25:00")
         )
 
+    #def tearDown(self) -> None:
+    #    """
+    #    README:
+    #        comment this method out when pushing to git
+    #        include it when running tests locally
+
+    #        github actions is a bit wonky - you cant (and dont need to) end the curses window
+    #        on there, however you need to do this and reset shell mode when running locally,
+    #        otherwise your terminal is bonked and you need to open a new one
+    #    """
+    #    curses.endwin()
+    #    curses.reset_shell_mode()
+
     def test_str(self):
         self.assertEqual(self.auction.__str__(), "some chore - yesterday at 25:00")
         self.auction.is_secret = True
@@ -42,21 +55,21 @@ class TestAuction(unittest.TestCase):
     def test_try_bid_too_low(self):
         bidder = Team(0)
         self.auction.current_bid = 2000
-        msg = self.auction.try_bid(500, bidder, '0 1::7')
+        msg = self.auction.try_bid(500, bidder, '0 1::7', .1)
         self.assertEqual(msg.txt, "Error: bid is too low (500 / 2000) (0 1::7)")
         self.assertEqual(msg.attr, curses.color_pair(constants.COLOUR_ERR_MSG))
 
     def test_try_bid_bidder_has_lead(self):
         bidder = Team(0)
         self.auction.bidder = bidder
-        msg = self.auction.try_bid(500, bidder, '')
+        msg = self.auction.try_bid(500, bidder, '', .1)
         self.assertEqual(msg.txt, "Error: bidder already has the lead (team0)")
         self.assertEqual(msg.attr, curses.color_pair(constants.COLOUR_ERR_MSG))
 
     def test_try_bid_cant_afford(self):
         bidder = Team(0)
         bidder.coins = 200
-        msg = self.auction.try_bid(500, bidder, '0 1::7')
+        msg = self.auction.try_bid(500, bidder, '0 1::7', .1)
         self.assertEqual(msg.txt, "Error: bidder can't afford (200 / 500) (0 1::7)")
         self.assertEqual(msg.attr, curses.color_pair(constants.COLOUR_ERR_MSG))
 
@@ -64,7 +77,7 @@ class TestAuction(unittest.TestCase):
         bidder = Team(0)
         bid_str = '1:0:0'
         bid = 493
-        msg = self.auction.try_bid(bid, bidder, bid_str)
+        msg = self.auction.try_bid(bid, bidder, bid_str, .1)
         self.assertEqual(msg.txt, "team0 bid 493 coins (1:0:0)")
         self.assertEqual(self.auction.current_bid, bid)
         self.assertEqual(self.auction.current_bid_str, bid_str)
