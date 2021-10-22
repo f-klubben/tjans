@@ -1,0 +1,42 @@
+[
+        {
+        "desc": "Mad prep",
+        "day": "Fredag",
+        "time": "20:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter aftensmad",
+        "day": "Fredag",
+        "time": "20:00"
+    },
+    {
+        "desc": "Udendørsvagt",
+        "day": "Fredag",
+        "time": "Hele dagen"
+    },
+    {
+        "desc": "Oprydning efter Bodycrashing",
+        "day": "Fredag",
+        "time": "Efter Bodycrashing"
+    },
+    {
+        "desc": "Oprydning efter fest",
+        "day": "Lørdag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Oprydning efter fest",
+        "day": "Lørdag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Klargøre morgenmad",
+        "day": "Lørdag",
+        "time": "8:00"
+    },
+    {
+        "desc": "Afrydning og opvask efter morgenmad",
+        "day": "Lørdag",
+        "time": "Efter morgenmad"
+    }
+]
