@@ -12,6 +12,7 @@ from .output import OutputWriter
 
 import curses
 import math
+import os
 from curses.textpad import rectangle
 from typing import Optional, List
 
@@ -34,6 +35,7 @@ class UI:
         {'help': "<ESC> to cancel"},
         {'help': f"Bid syntax: {InputValidation.BID_PATTERN}"},
         {'help': f"Instant win syntax: {InputValidation.BID_INSTANT_WIN_PATTERN}"},
+        {'help': f"Freebie syntax: {InputValidation.BID_FREEBIE_PATTERN}"},
         {'cmd': 'c', 'help': "Edit conversion text box"},
         {'help': "<ENTER> to try and convert"},
         {'help': "<ESC> to cancel"},
@@ -44,6 +46,9 @@ class UI:
     ]
 
     def __init__(self):
+        if not os.path.isdir('logs'):
+            os.mkdir('logs')
+
         self.cfg = Config()
         self.msg_logger = MessageLogger()
         self.state_logger = StateLogger()
@@ -121,12 +126,18 @@ class UI:
         # draw header elements
         for elem in self.HEADER_ELEMS:
             if elem['text'] == 'auction':
-                self.center_text("Current auction: " +
-                                 self.cur_auction.__str__(), elem['attr'])
+                if self.cur_auction:
+                    self.center_text("Current auction: " +
+                                     self.cur_auction.__str__(), elem['attr'])
+                else:
+                    self.center_text("Done!", elem['attr'])
                 continue
             elif elem['text'] == 'bid':
-                self.center_text(f"Highest bidder: {self.cur_auction.bidder} "
-                                 f"({self.cur_auction.current_bid} / {self.cur_auction.current_bid_str})", elem['attr'])
+                if self.cur_auction:
+                    self.center_text(f"Highest bidder: {self.cur_auction.bidder} "
+                                     f"({self.cur_auction.current_bid} / {self.cur_auction.current_bid_str})", elem['attr'])
+                else:
+                    self.center_text("-", elem['attr'])
                 continue
 
             self.center_text(elem['text'], elem['attr'])
@@ -240,7 +251,20 @@ class UI:
                                    attr=curses.color_pair(constants.COLOUR_ERR_MSG))
             else:
                 normalized_msg = ':'.join(x if x else '0' for x in msg.split()[1].split(':')).strip()
-                self.msg = self.cur_auction.try_bid(bid, self.teams[team_id], normalized_msg)
+                self.msg = self.cur_auction.try_bid(bid, self.teams[team_id], normalized_msg,
+                                                    self.cfg.auction_min_overbid_factor())
+
+        elif InputValidation.validate_bid_freebie(msg):
+            team_id = self.parse_freebie_bid(msg)
+            if sum(1 for x in self.teams if not len(x.chores) == self.n_chores_per_team) > 1:
+                self.msg = Message(f"Error: more than 1 team still needs chores - freebie can't be used yet",
+                                   attr=curses.color_pair(constants.COLOUR_ERR_MSG))
+            elif team_id > len(self.teams):
+                self.msg = Message(f"Error: team{team_id} does not exist",
+                                   attr=curses.color_pair(constants.COLOUR_ERR_MSG))
+            else:
+                self.msg = self.cur_auction.freebie(self.teams[team_id])
+                self._prepare_next_auction()
 
         else:
             self.msg = Message(f"Error: input not valid ({msg.strip()}). Check command menu for syntax.",
@@ -313,8 +337,9 @@ class UI:
         if not self.auctions:
             # no more auctions remain
             OutputWriter.write_to_pdf(self.teams)
-            self.msg = Message('All chores have been sold. PDF saved to run dir.',
+            self.msg = Message('All chores have been sold. MD saved to run dir.',
                                attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
+            self.completed_auctions.append(self.cur_auction)
             self.cur_auction = None
             return
 
@@ -387,6 +412,14 @@ class UI:
         return int(bid.split()[0])
 
     @staticmethod
+    def parse_freebie_bid(bid: str) -> int:
+        """
+        Parse freebie bid string input from bid Textbox. Doesn't include any validation,
+        and should as such be called after its' corresponding InputValidation handler
+        """
+        return int(bid.split()[0])
+
+    @staticmethod
     def parse_conversion(conversion: str) -> int:
         """
         Parse conversion string input from bid Textbox. Doesn't include any validation, and should
@@ -431,7 +464,7 @@ class UI:
         cur_row = self.left_margin_text(self.HR, cur_row)
 
         # +1 because we delete after current auction is selected
-        auctions_left = len(self.auctions) + 1
+        auctions_left = len(self.auctions) + (1 if self.cur_auction else 0)
         auctions_done = len(self.completed_auctions)
         secrets_left = sum(1 for x in self.auctions if x.is_secret)
         free_chores_left = sum(1 for x in self.auctions if x.chore.desc == 'Fritjans')

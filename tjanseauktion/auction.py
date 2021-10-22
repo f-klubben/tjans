@@ -2,6 +2,7 @@ from . import constants
 from .chore import Chore
 from .team import Team
 from .message import Message
+from .config import Config
 
 import random
 import curses
@@ -46,7 +47,15 @@ class Auction:
             return False
         return True
 
-    def try_bid(self, bid: int, bidder: Team, bid_str: str) -> Message:
+    def is_bid_high_enough(self, bid: int, overbid_factor: float) -> bool:
+        """
+        Ensure overbid is high enough
+        """
+        if bid >= int(self.current_bid + (self.current_bid * overbid_factor)):
+            return True
+        return False
+
+    def try_bid(self, bid: int, bidder: Team, bid_str: str, overbid_factor: float) -> Message:
         """
         Try placing bid
         :param bid: bid being placed
@@ -64,6 +73,11 @@ class Auction:
 
         if not bidder.can_afford(bid):
             return Message(f"Error: bidder can't afford ({bidder.coins} / {bid}) ({bid_str})",
+                           attr=curses.color_pair(constants.COLOUR_ERR_MSG))
+
+        if not self.is_bid_high_enough(bid, overbid_factor):
+            return Message(f"Error: bid is not 10% above current bid ({bid} / "
+                           f"{int(self.current_bid + (self.current_bid * overbid_factor))})",
                            attr=curses.color_pair(constants.COLOUR_ERR_MSG))
 
         self.current_bid = bid
@@ -85,6 +99,19 @@ class Auction:
         buyer.instant_win(self.chore)
 
         return Message(f"team{buyer.id} used instant win, it's super effective!",
+                       attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
+
+    def freebie(self, bidder: Team) -> Message:
+        """
+        Give chore to bidder as a freebie
+        """
+        self.current_bid = -2
+        self.current_bid_str = f'{bidder.id} free'
+        self.bidder = bidder
+        self.is_completed = True
+        bidder.add_chore(self.chore)
+
+        return Message(f"Chore {self.chore.desc} given to team{self.bidder.id} for free",
                        attr=curses.color_pair(constants.COLOUR_SUCCESS_MSG))
 
     def complete_auction(self) -> Message:

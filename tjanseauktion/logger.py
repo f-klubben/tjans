@@ -47,7 +47,7 @@ class StateLogger:
             'teams': [x.to_json() for x in teams],
             'auctions': [x.to_json() for x in auctions],
             'completed_auctions': [x.to_json() for x in completed_auctions],
-            'cur_auction': cur_auction.to_json()
+            'cur_auction': cur_auction.to_json() if cur_auction else {}
         }
 
         with open(self.path, 'w', encoding='utf-8') as f:
