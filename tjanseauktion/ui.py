@@ -12,6 +12,7 @@ from .output import OutputWriter
 
 import curses
 import math
+import os
 from curses.textpad import rectangle
 from typing import Optional, List
 
@@ -45,6 +46,9 @@ class UI:
     ]
 
     def __init__(self):
+        if not os.path.isdir('logs'):
+            os.mkdir('logs')
+
         self.cfg = Config()
         self.msg_logger = MessageLogger()
         self.state_logger = StateLogger()

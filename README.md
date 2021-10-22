@@ -2,17 +2,9 @@
 
 A pure Python port of the original [Tjanseauktion](https://github.com/MikkelKettunen/Tjanseauktion) used on fyttetur.
 
-## Setup
-
-### Prerequisites
+## Prerequisites
 
 - Python 3.6+
-
-### Installation
-
-```
-$ mkdir logs
-```
 
 ## Usage
 
