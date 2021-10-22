@@ -4,6 +4,7 @@ import re
 class InputValidation:
     BID_PATTERN = r'^\d+ \d*:\d*:\d*$'
     BID_INSTANT_WIN_PATTERN = r'^\d+ win$'
+    BID_FREEBIE_PATTERN = r'^\d+ free$'
     CONVERT_PATTERN = r'^\d*:\d*:\d*$'
 
     @classmethod
@@ -21,6 +22,14 @@ class InputValidation:
         Should match InputValidation.BID_INSTANT_WIN_PATTERN, e.g., "4 win"
         """
         return bool(re.match(cls.BID_INSTANT_WIN_PATTERN, bid.strip()))
+
+    @classmethod
+    def validate_bid_freebie(cls, bid: str) -> bool:
+        """
+        Validate bid freebie - for when only one team remains
+        Should match InputValidation.BID_FREEBIE, e.g., "7 free"
+        """
+        return bool(re.match(cls.BID_FREEBIE_PATTERN, bid.strip()))
 
     @classmethod
     def validate_convert_input(cls, conversion: str) -> bool:
