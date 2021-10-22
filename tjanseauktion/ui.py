@@ -54,7 +54,7 @@ class UI:
             self.teams, self.auctions, self.completed_auctions, self.cur_auction = self.state_logger.load_state()
         else:
             self.teams = [Team(i) for i in range(self.cfg.auction_n_teams())]
-            self.chores = Chore.load_chores(path='data/chores.sample.json')
+            self.chores = Chore.load_chores()
             self.auctions = Auction.create_auctions(self.chores, self.cfg.auction_n_secrets(), len(self.teams))
             self.completed_auctions = []  # type: List[Auction]
             self.cur_auction = self.auctions[0]  # type: Auction
