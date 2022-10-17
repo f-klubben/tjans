@@ -398,7 +398,7 @@ class UI:
         """
         rates = [constants.HIGH_VALUE, constants.MID_VALUE, constants.LOW_VALUE]
         team_id, bid_str = bid.split(' ')
-        currency_bids = [int(x) if x else '' for x in bid_str.split(':')]
+        currency_bids = [int(x) if x else '' for x in bid_str.split(',')]
         bid_int = sum(cash * rate for cash, rate in zip(currency_bids, rates) if cash) or 0
 
         return int(team_id), bid_int
@@ -426,7 +426,7 @@ class UI:
         as such be called after its' corresponding InputValidation handler
         """
         rates = [constants.HIGH_VALUE, constants.MID_VALUE, constants.LOW_VALUE]
-        conversions = [int(x) if x else '' for x in conversion.split(':')]
+        conversions = [int(x) if x else '' for x in conversion.split(',')]
         value = sum(cash * rate for cash, rate in zip(conversions, rates) if cash) or 0
 
         return value
