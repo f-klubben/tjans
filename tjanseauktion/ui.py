@@ -101,6 +101,7 @@ class UI:
         # setup colour pairs, (pair_id, foreground, background)
         curses.init_pair(constants.COLOUR_ERR_MSG, curses.COLOR_RED, 0)
         curses.init_pair(constants.COLOUR_SUCCESS_MSG, curses.COLOR_GREEN, 0)
+        curses.init_pair(constants.COLOUR_WARNING_MSG, curses.COLOR_YELLOW, 0)
 
         # don't echo keys on screen
         curses.noecho()
