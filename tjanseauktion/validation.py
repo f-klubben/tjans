@@ -2,10 +2,10 @@ import re
 
 
 class InputValidation:
-    BID_PATTERN = r'^\d+ \d*:\d*:\d*$'
+    BID_PATTERN = r'^\d+ \d*,\d*,\d*$'
     BID_INSTANT_WIN_PATTERN = r'^\d+ win$'
     BID_FREEBIE_PATTERN = r'^\d+ free$'
-    CONVERT_PATTERN = r'^\d*:\d*:\d*$'
+    CONVERT_PATTERN = r'^\d*,\d*,\d*$'
 
     @classmethod
     def validate_bid_input(cls, bid: str) -> bool:
