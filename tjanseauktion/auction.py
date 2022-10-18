@@ -63,6 +63,14 @@ class Auction:
         :param bid_str: bid string queried in the ui
         :return: Message object containing resulting success/error message
         """
+        # workaround for fast-pace bidding where intermediate bid is missed, allowing same team to bid again
+        if not self.is_bidder_valid(bidder) and bid >= int(self.current_bid):
+            self.current_bid = bid
+            self.current_bid_str = bid_str
+            self.bidder = bidder
+            return Message(f'team{bidder.id} bid {bid} coins ({bid_str}) OVERRIDE',
+                           attr=curses.color_pair(constants.COLOUR_WARNING_MSG))
+
         if not self.is_bid_valid(bid):
             return Message(f'Error: bid is too low ({bid} / {self.current_bid}) ({bid_str})',
                            attr=curses.color_pair(constants.COLOUR_ERR_MSG))

@@ -63,8 +63,8 @@ class TestAuction(unittest.TestCase):
         bidder = Team(0)
         self.auction.bidder = bidder
         msg = self.auction.try_bid(500, bidder, '', .1)
-        self.assertEqual(msg.txt, "Error: bidder already has the lead (team0)")
-        self.assertEqual(msg.attr, curses.color_pair(constants.COLOUR_ERR_MSG))
+        self.assertEqual(msg.txt, "team0 bid 500 coins () OVERRIDE")
+        self.assertEqual(msg.attr, curses.color_pair(constants.COLOUR_WARNING_MSG))
 
     def test_try_bid_cant_afford(self):
         bidder = Team(0)
